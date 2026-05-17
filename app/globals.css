@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: #07080B;
+  color: #E5E7EB;
+}
+
+.card {
+  @apply rounded-2xl border border-ink-700/70 bg-ink-850/80 backdrop-blur p-5;
+}
+
+.card-hover {
+  @apply transition hover:border-accent-gold/40 hover:shadow-glow;
+}
+
+.chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-ink-600 bg-ink-800 px-2.5 py-1 text-xs text-gray-300;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition;
+}
+
+.btn-primary {
+  @apply btn bg-accent-gold text-ink-950 hover:bg-yellow-300;
+}
+
+.btn-ghost {
+  @apply btn border border-ink-700 text-gray-200 hover:border-accent-gold/60 hover:text-white;
+}
+
+.section-grid {
+  @apply grid gap-5 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.metric {
+  @apply text-3xl font-semibold tracking-tight text-white;
+}
+
+.label {
+  @apply text-xs uppercase tracking-wider text-gray-400;
+}
+
+.progress {
+  @apply h-2 w-full overflow-hidden rounded-full bg-ink-700;
+}
+.progress > span {
+  @apply block h-full rounded-full bg-gradient-to-r from-accent-gold via-amber-300 to-accent-emerald;
+}
