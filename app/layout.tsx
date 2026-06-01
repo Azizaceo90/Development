@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "Adella Alim · Command Center",
+  title: "Medical Coding & Billing",
   description:
-    "Mission, growth, and business dashboard — donations, AI tools for kids, Quran, NOI history, gym, 6 roles, sales, property, farm, ads.",
+    "Epic-style medical coding workspace — inpatient and outpatient coding from clinical documentation using ICD-10-CM and CPT/HCPCS, with CPT verification.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
