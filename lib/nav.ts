@@ -1,7 +1,7 @@
 export type NavItem = {
   href: string;
   label: string;
-  group: "overview" | "mission" | "growth" | "business";
+  group: "overview" | "mission" | "growth" | "business" | "clinical";
   icon: string;
 };
 
@@ -18,6 +18,10 @@ export const NAV: NavItem[] = [
   { href: "/property", label: "Brick Property", group: "business", icon: "🏠" },
   { href: "/farm", label: "Farm", group: "business", icon: "🌾" },
   { href: "/ads", label: "Local Paid Ads", group: "business", icon: "◎" },
+  { href: "/medical-coding", label: "Medical Coding", group: "clinical", icon: "🏥" },
+  { href: "/medical-coding/inpatient", label: "Inpatient Coding", group: "clinical", icon: "🛏" },
+  { href: "/medical-coding/outpatient", label: "Outpatient Coding", group: "clinical", icon: "🩺" },
+  { href: "/medical-coding/verify", label: "CPT Verifier", group: "clinical", icon: "✓" },
 ];
 
 export const GROUPS: { key: NavItem["group"]; label: string }[] = [
@@ -25,4 +29,5 @@ export const GROUPS: { key: NavItem["group"]; label: string }[] = [
   { key: "mission", label: "Mission" },
   { key: "growth", label: "Personal Growth" },
   { key: "business", label: "Business" },
+  { key: "clinical", label: "Clinical" },
 ];
