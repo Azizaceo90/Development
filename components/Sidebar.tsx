@@ -11,11 +11,11 @@ export default function Sidebar() {
       <div className="px-6 py-6 border-b border-ink-700/60">
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-accent-gold to-amber-700 grid place-items-center text-ink-950 font-bold">
-            A
+            ⌘
           </div>
           <div>
-            <div className="font-semibold tracking-tight text-white">Adella Alim</div>
-            <div className="text-xs text-gray-400">Command Center</div>
+            <div className="font-semibold tracking-tight text-white">MedCode</div>
+            <div className="text-xs text-gray-400">Coding &amp; Billing</div>
           </div>
         </div>
       </div>

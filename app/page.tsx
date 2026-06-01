@@ -1,46 +1,87 @@
+import Link from "next/link";
 import Topbar from "@/components/Topbar";
 import StatCard from "@/components/StatCard";
-import ProgressCard from "@/components/ProgressCard";
 import SectionHeader from "@/components/SectionHeader";
-import Link from "next/link";
-import { NAV } from "@/lib/nav";
+import { CPT_CODES, ICD_CODES, MODIFIERS } from "@/lib/medical-codes";
 
-export default function Overview() {
+const workflows = [
+  {
+    href: "/inpatient",
+    title: "Inpatient Coding",
+    icon: "🛏",
+    desc: "Principal diagnosis, MCC/CC capture, and procedures coded from the admission note with DRG severity.",
+  },
+  {
+    href: "/outpatient",
+    title: "Outpatient Coding",
+    icon: "🩺",
+    desc: "First-listed diagnosis, E/M level, and CPT services for clinic, ED, and same-day surgery encounters.",
+  },
+  {
+    href: "/verify",
+    title: "CPT Verifier",
+    icon: "✓",
+    desc: "Validate CPT Category I/II/III and HCPCS Level II codes — format, category, modifiers, and fee.",
+  },
+];
+
+const queue = [
+  { mrn: "—", type: "Inpatient", note: "Awaiting first chart", status: "Unassigned" },
+  { mrn: "—", type: "Outpatient", note: "Awaiting first chart", status: "Unassigned" },
+];
+
+export default function Home() {
   return (
     <>
       <Topbar
-        title="Command Center"
-        subtitle="Every mission, every dollar, every rep — one view."
+        title="Medical Coding & Billing"
+        subtitle="Epic-style coding workspace — inpatient & outpatient, ICD-10-CM + CPT/HCPCS, with CPT verification."
       />
 
       <section className="section-grid">
-        <StatCard label="Pipeline Revenue (5mo target)" value="$10,000,000" hint="Stretch: $10M in 5 months" accent="gold" />
-        <StatCard label="Mecca Fund Raised" value="$0" delta="+0% MoM" hint="Adella Alim Academy" accent="emerald" />
-        <StatCard label="Active Roles Stacked" value="0 / 6" hint="Founder · Ops · Sales · Media · Coach · Investor" accent="violet" />
-        <StatCard label="Kids Enrolled (AI Tools)" value="0" hint="Science · Reading · Math" accent="sky" />
-        <StatCard label="Gym Sessions This Week" value="0 / 6" hint="Strength + conditioning" accent="rose" />
-        <StatCard label="Quran Pages Memorized" value="0" hint="Daily ḥifẓ" accent="gold" />
+        <StatCard label="CPT / HCPCS in set" value={String(CPT_CODES.length)} accent="gold" hint="Category I/II/III + HCPCS" />
+        <StatCard label="ICD-10-CM in set" value={String(ICD_CODES.length)} accent="emerald" hint="Diagnosis reference" />
+        <StatCard label="Modifiers" value={String(MODIFIERS.length)} accent="violet" />
+        <StatCard label="Charts in queue" value={String(queue.length)} accent="sky" hint="Pending coder review" />
       </section>
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-2">
-        <ProgressCard title="Path to $10M (5 months)" current={0} target={10_000_000} caption="Sales + farm + ads + property income combined." />
-        <ProgressCard title="Mecca Trip Fund" current={0} target={150_000} caption="Goal: send the first cohort of Adella Alim Academy kids to Mecca." />
+      <div className="mt-10">
+        <SectionHeader title="Coding workflows" description="Pick a setting or verify codes directly." />
+        <div className="grid gap-4 md:grid-cols-3">
+          {workflows.map((w) => (
+            <Link key={w.href} href={w.href} className="card card-hover block">
+              <div className="text-2xl">{w.icon}</div>
+              <div className="mt-3 text-lg font-semibold text-white">{w.title}</div>
+              <p className="mt-2 text-sm text-gray-400">{w.desc}</p>
+              <div className="mt-4 text-sm text-accent-gold">Open →</div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="mt-10">
-        <SectionHeader title="Quick jump" description="All command-center sections." />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {NAV.filter((n) => n.href !== "/").map((n) => (
-            <Link key={n.href} href={n.href} className="card card-hover flex items-center gap-3">
-              <span className="h-10 w-10 grid place-items-center rounded-xl bg-ink-800 border border-ink-700 text-lg">
-                {n.icon}
-              </span>
-              <div>
-                <div className="text-white text-sm font-medium">{n.label}</div>
-                <div className="text-xs text-gray-400">{n.href}</div>
-              </div>
-            </Link>
-          ))}
+        <SectionHeader title="Coding queue" description="Charts pending review from clinical documentation." />
+        <div className="card p-0 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-ink-800/60 text-gray-400">
+              <tr>
+                <th className="text-left px-5 py-3">MRN</th>
+                <th className="text-left px-5 py-3">Setting</th>
+                <th className="text-left px-5 py-3">Note</th>
+                <th className="text-left px-5 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {queue.map((q, i) => (
+                <tr key={i} className="border-t border-ink-700/60">
+                  <td className="px-5 py-3 font-mono text-white">{q.mrn}</td>
+                  <td className="px-5 py-3 text-gray-300">{q.type}</td>
+                  <td className="px-5 py-3 text-gray-400">{q.note}</td>
+                  <td className="px-5 py-3"><span className="chip">{q.status}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>
