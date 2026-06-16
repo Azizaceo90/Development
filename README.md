@@ -1,27 +1,32 @@
-# Medical Coding & Billing
+# 123 Go Staff
 
-An Epic-style medical coding workspace for translating **clinical documentation**
-into billable codes. Supports **inpatient** and **outpatient** coding using
-**ICD-10-CM** diagnoses and **CPT/HCPCS** procedures, with a built-in **CPT
-verifier**.
+Marketing website for **123 Go Staff** — a people-first, nurse-owned staffing
+agency placing reliable, vetted talent across healthcare, warehouse, light
+industrial, and administrative roles.
 
-## Features
+> _Staffing made simple. People made the priority._
 
-- **Overview dashboard** (`/`) — reference counts, coding workflows, and the chart queue.
-- **Inpatient coding** (`/inpatient`) — principal diagnosis, MCC/CC severity capture, and procedures coded from the admission note. Live DRG-severity (MCC) signal.
-- **Outpatient coding** (`/outpatient`) — first-listed diagnosis, E/M level, and CPT services with live charges and work RVUs.
-- **CPT verifier** (`/verify`) — validates CPT Category I/II/III and HCPCS Level II codes:
-  - **Format** detection (Cat I `#####`, Cat II `####F`, Cat III `####T`, HCPCS `A####`)
-  - **Reference lookup** → `valid` / `unrecognized` (format OK, not in set) / `invalid-format`
-  - **Modifier** validation (e.g. `99214-25`)
-- **Compliance checks** per encounter — required principal/first-listed diagnosis, ICD format, setting mismatches, and Medicare Inpatient-Only edits.
+## Pages
+
+- **Home** (`/`) — hero, services, process, employer/seeker split, testimonials.
+- **For Employers** (`/employers`) — capabilities, process, FAQs, and a talent-request form.
+- **For Job Seekers** (`/job-seekers`) — how it works, benefits, and an apply form.
+- **About** (`/about`) — story, mission, and values.
+- **Contact** (`/contact`) — direct contact channels and a message form.
 
 ## Tech
 
 - Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS
-- Coding logic lives in [`lib/medical-codes.ts`](lib/medical-codes.ts):
-  - `verifyCpt()` — single-code verification with modifier support
-  - `summarizeEncounter()` — encounter-level charges, work RVU, MCC, and billability
+- No runtime dependencies beyond Next/React — icons are inline SVG (`components/Icon.tsx`).
+- Shared content lives in [`lib/site.ts`](lib/site.ts) (company info, services, stats, FAQs).
+- SEO: per-page metadata, `app/sitemap.ts`, `app/robots.ts`.
+
+## Forms
+
+Lead/apply/contact forms (`components/LeadForm.tsx`) are static-friendly: with no
+backend configured they gracefully open a pre-filled email to the company. To
+wire up real submissions, replace the `handleSubmit` handler with a POST to your
+form endpoint (e.g. a serverless function, Formspree, or an ATS webhook).
 
 ## Run locally
 
@@ -31,11 +36,11 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 ```
 
-## Important caveat
+## Customizing
 
-The ICD-10-CM / CPT / HCPCS tables in `lib/medical-codes.ts` are a
-**representative teaching subset**, not the licensed or complete AMA CPT /
-CMS code sets. This project is a standalone coding workspace, **not** an
-actual Epic integration — there is no FHIR / Interconnect / EHR connection.
-For production use, license the official code sets and integrate with Epic's
-APIs.
+- **Brand colors / fonts** — `tailwind.config.ts` (`brand` = green "go", `navy` = trust).
+- **Company details** (phone, email, social, hours) — `lib/site.ts` → `site`.
+- **Services, stats, testimonials, FAQs** — `lib/site.ts`.
+
+> Contact details and metrics in `lib/site.ts` are placeholders — update them with
+> the real numbers before going live.
